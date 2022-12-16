@@ -1,0 +1,38 @@
+.playground {
+  position: relative;
+  margin: 10% auto;
+  width: 1280px;
+  height: 275px;
+  border: 1px solid blue;
+  background-image: url(./assets/pixelart/hintergrund_pixelart.png);
+  background-size: contain;
+}
+
+.player {
+  position: absolute;
+  background-color: green;
+  width: 40px;
+  transition: 0.5s;
+  transition-timing-function: ease-out;
+}
+
+.trommel {
+  position: absolute;
+  width: 40.5px;
+  height: 48px;
+  background-image: url(./assets/pixelart/Trommel.png);
+}
+
+.vogel {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: darkred;
+}
+
+.counterobjekt {
+  position: absolute;
+  width: 20px;
+  height: 275px;
+  background-color: transparent;
+}
