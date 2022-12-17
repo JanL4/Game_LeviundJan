@@ -22,10 +22,57 @@ spieler.style.height = "70px";
 var timerspielerfallen = new Timer(40);
 var timercounter = new Timer(10);
 
+//Functions
 function springen() {
   spieler.style.top = parseInt(spieler.style.top) - 100 + "px";
 }
 
+function fallen() {
+  spieler.style.top = parseInt(spieler.style.top) + 100 + "px";
+}
+
+function ducken() {
+  spieler.style.height = parseInt(spieler.style.height) - 30 + "px";
+  spieler.style.top = parseInt(spieler.style.top) + 30 + "px";
+}
+
+function aufstehen() {
+  spieler.style.height = parseInt(spieler.style.height) + 30 + "px";
+  spieler.style.top = parseInt(spieler.style.top) - 30 + "px";
+}
+
+function trommelspawnen() {
+  var h = document.createElement("div");
+  h.classList.add("trommel");
+  h.style.bottom = "0px";
+  h.style.right = "0px";
+  spielfeld.appendChild(h);
+}
+
+function vogelspawnen() {
+  var b = document.createElement("div");
+  b.classList.add("vogel");
+  b.style.bottom = "100px";
+  b.style.right = "-150px";
+  spielfeld.appendChild(b);
+}
+
+function gameover() {
+  musik.pause();
+  gameoversound.play();
+  gameovermusik.play();
+  alert("Game over!" + "Punkte in dieser Runde: " + score);
+}
+
+function counterobjektespawnen() {
+  var a = document.createElement("div");
+  a.classList.add("counterobjekt");
+  a.style.bottom = "0px";
+  a.style.right = "0px";
+  spielfeld.appendChild(a);
+}
+
+//loop
 function loop() {
   // Sound
   musik.play();
@@ -36,7 +83,7 @@ function loop() {
   let zufallszahltimmertrommel = Math.random() * 200;
   var timertrommel = new Timer(zufallszahltimmertrommel);
 
-  let zufallszahltimmervogel = Math.random() * 500;
+  let zufallszahltimmervogel = Math.random() * 800;
   var timervogel = new Timer(zufallszahltimmervogel);
 
   // Springen
@@ -44,25 +91,23 @@ function loop() {
     springen();
   }
   if (parseInt(spieler.style.top) < 205 && timerspielerfallen.ready()) {
-    spieler.style.top = parseInt(spieler.style.top) + 100 + "px";
+    fallen();
   }
-  // ducken
-  if (keyboard(16) && parseInt(spieler.style.height) == 70) {
-    spieler.style.height = parseInt(spieler.style.height) - 30 + "px";
-    spieler.style.top = parseInt(spieler.style.top) + 30 + "px";
+  // ducken und aufstehen
+  if (
+    keyboard(16) &&
+    parseInt(spieler.style.height) == 70 &&
+    parseInt(spieler.style.top) == 205
+  ) {
+    ducken();
   }
   if (parseInt(spieler.style.height) < 70 && timerspielerfallen.ready()) {
-    spieler.style.height = parseInt(spieler.style.height) + 30 + "px";
-    spieler.style.top = parseInt(spieler.style.top) - 30 + "px";
+    aufstehen();
   }
 
   // Trommel Hinderniss spawnen
   if (timertrommel.ready()) {
-    var h = document.createElement("div");
-    h.classList.add("trommel");
-    h.style.bottom = "0px";
-    h.style.right = "0px";
-    spielfeld.appendChild(h);
+    trommelspawnen();
   }
   // Trommel bewegen
   var trommeln = document.querySelectorAll(".trommel");
@@ -75,11 +120,7 @@ function loop() {
 
   // Vogel Hinderniss spawnen
   if (timervogel.ready()) {
-    var b = document.createElement("div");
-    b.classList.add("vogel");
-    b.style.bottom = "100px";
-    b.style.right = "-150px";
-    spielfeld.appendChild(b);
+    vogelspawnen();
   }
   // Vogel bewegen
   var vogeln = document.querySelectorAll(".vogel");
@@ -92,25 +133,18 @@ function loop() {
 
   // gegner erkennen und game over
   if (anyCollision(spieler, trommeln)) {
-    musik.pause();
-    gameoversound.play();
-    gameovermusik.play();
-    alert("Game over!" + "Punkte in dieser Runde: " + score);
+    gameover();
     return;
   }
 
   if (anyCollision(spieler, vogeln)) {
-    alert("Game over!" + "Punkte in dieser Runde: " + score);
+    gameover();
     return;
   }
 
   // Counter objekt spawnen
   if (timercounter.ready()) {
-    var a = document.createElement("div");
-    a.classList.add("counterobjekt");
-    a.style.bottom = "0px";
-    a.style.right = "0px";
-    spielfeld.appendChild(a);
+    counterobjektespawnen();
   }
   // counterobjekt bewegen
   var counterobjekte = document.querySelectorAll(".counterobjekt");

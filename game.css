@@ -10,8 +10,8 @@
 
 .player {
   position: absolute;
-  background-color: green;
-  width: 40px;
+  background-image: url(./assets/pixelart/Bob-Marley-Pixel.png);
+  width: 44px;
   transition: 0.5s;
   transition-timing-function: ease-out;
 }
@@ -25,9 +25,9 @@
 
 .vogel {
   position: absolute;
-  width: 20px;
+  width: 28px;
   height: 20px;
-  background-color: darkred;
+  background-image: url(./assets/pixelart/Vogel.png);
 }
 
 .counterobjekt {
